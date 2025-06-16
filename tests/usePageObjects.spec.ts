@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker'
 import { argosScreenshot } from "@argos-ci/playwright";
 
 test.beforeEach(async({page}) => {
-    await page.goto('http://localhost:59488/')
+    await page.goto('http://localhost:51879/')
 })
 
 test('navigate to form page', async({page}) =>{
