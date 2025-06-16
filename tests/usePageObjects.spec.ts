@@ -3,6 +3,7 @@ import { PageManager } from '../page-objects/pageManager'
 import { privateDecrypt } from 'crypto'
 import { group } from 'console'
 import { faker } from '@faker-js/faker'
+import { argosScreenshot } from "@argos-ci/playwright";
 
 test.beforeEach(async({page}) => {
     await page.goto('http://localhost:59488/')
@@ -33,5 +34,7 @@ test('parametrized methods', async({page}) =>{
 test.only('testing with argos ci', async({page}) =>{
     const pm = new PageManager(page)
     await pm.navigateTo().formlayoutsPage()
+    await argosScreenshot(page, "form layouts Page");
     await pm.navigateTo().datepickerPage()
+    await argosScreenshot(page, "datepicker Page");
 })

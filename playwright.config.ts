@@ -23,7 +23,18 @@ export default defineConfig<EyesFixture>({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: '@applitools/eyes-playwright/reporter',
+  reporter: [
+        // Use "dot" reporter on CI, "list" otherwise (Playwright default).
+    process.env.CI ? ["dot"] : ["list"],
+     [
+      "@argos-ci/playwright/reporter",
+      {
+        // Upload to Argos on CI only.
+        uploadToArgos: !!process.env.CI,
+      },
+    ],
+    ['html']
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Configuration for Eyes VisualAI */
@@ -48,6 +59,8 @@ export default defineConfig<EyesFixture>({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+        // Capture screenshot after each test failure.
+    screenshot: "only-on-failure",
   },
 
   /* Configure projects for major browsers */
